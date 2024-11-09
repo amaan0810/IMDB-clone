@@ -6,10 +6,14 @@ import { Pagination } from "./Pagination";
 export const Movies = () => {
   let [movies, setmovies] = useState([]);
   let [pageNo, setPageNo] = useState(1);
+
+  const api_key = import.meta.env.VITE_TMDB_API_KEY;
+  console.log(api_key);
+
   useEffect(() => {
     axios
       .get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=ef1f62db9d9e420782c98d528765e40a&language=en-US&page=${pageNo}`
+        `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&language=en-US&page=${pageNo}`
       )
       .then((res) => {
         console.log(res.data.results);
