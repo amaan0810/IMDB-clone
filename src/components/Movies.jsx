@@ -3,12 +3,15 @@ import { MovieCard } from "./MovieCard";
 import axios from "axios";
 import { Pagination } from "./Pagination";
 
-export const Movies = () => {
+export const Movies = ({
+  handleAddtoWatchlist,
+  handleRemovetoWatchlist,
+  watchlist,
+}) => {
   let [movies, setmovies] = useState([]);
   let [pageNo, setPageNo] = useState(1);
 
   const api_key = import.meta.env.VITE_TMDB_API_KEY;
-  console.log(api_key);
 
   useEffect(() => {
     axios
@@ -43,6 +46,10 @@ export const Movies = () => {
               key={movie.id}
               poster_path={movie.poster_path}
               movie_name={movie.original_title}
+              handleAddtoWatchlist={handleAddtoWatchlist}
+              handleRemovetoWatchlist={handleRemovetoWatchlist}
+              movieobj={movie}
+              watchlist={watchlist}
             />
           );
         })}

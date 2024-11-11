@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Watchlist = () => {
+export const Watchlist = ({ watchlist }) => {
   return (
     <>
       <div className="flex justify-center flex-wrap m-4">
@@ -30,19 +30,23 @@ export const Watchlist = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="flex items-center py-3 px-3">
-                <img
-                  className="h-[5rem] w-[4rem]"
-                  src={`https://m.media-amazon.com/images/M/MV5BZTg1ODU5NzctMWRlNC00ZDQxLWE4YmYtZjc0OWZhMTFlNzU0XkEyXkFqcGc@._V1_.jpg`}
-                />
-                <div className="mx-6"> if Movie </div>
-              </td>
-              <td>8.5</td>
-              <td>9</td>
-              <td>action</td>
-              <td className="text-red-500">Delete</td>
-            </tr>
+            {watchlist.map((movieobj) => {
+              return (
+                <tr key={movieobj.id}>
+                  <td className="flex items-center py-3 px-3">
+                    <img
+                      className="h-[5rem] w-[4rem]"
+                      src={`https://image.tmdb.org/t/p/original/${movieobj.poster_path}`}
+                    />
+                    <div className="mx-6">{movieobj.original_title} </div>
+                  </td>
+                  <td>{movieobj.vote_average}</td>
+                  <td>{movieobj.popularity}</td>
+                  <td>action</td>
+                  <td className="text-red-500">Delete</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
