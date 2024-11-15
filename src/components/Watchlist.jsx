@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const Watchlist = ({ watchlist }) => {
+  const [search, setSearch] = useState("");
+
+  const handelSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <>
       <div className="flex justify-center flex-wrap m-4">
@@ -17,6 +23,8 @@ export const Watchlist = ({ watchlist }) => {
           className="h-[2rem] w-[18rem] bg-gray-200 px-3"
           type="text"
           placeholder="Search for movies"
+          onChange={handelSearch}
+          value={search}
         />
       </div>
       <div className="border border-gray-200 m-8 rounded-lg overflow-hidden">
@@ -30,23 +38,29 @@ export const Watchlist = ({ watchlist }) => {
             </tr>
           </thead>
           <tbody>
-            {watchlist.map((movieobj) => {
-              return (
-                <tr key={movieobj.id}>
-                  <td className="flex items-center py-3 px-3">
-                    <img
-                      className="h-[5rem] w-[4rem]"
-                      src={`https://image.tmdb.org/t/p/original/${movieobj.poster_path}`}
-                    />
-                    <div className="mx-6">{movieobj.original_title} </div>
-                  </td>
-                  <td>{movieobj.vote_average}</td>
-                  <td>{movieobj.popularity}</td>
-                  <td>action</td>
-                  <td className="text-red-500">Delete</td>
-                </tr>
-              );
-            })}
+            {watchlist
+              .filter((movieobj) => {
+                return movieobj.original_title
+                  .toLowerCase()
+                  .includes(search.toLowerCase());
+              })
+              .map((movieobj) => {
+                return (
+                  <tr key={movieobj.id}>
+                    <td className="flex items-center py-3 px-3">
+                      <img
+                        className="h-[5rem] w-[4rem]"
+                        src={`https://image.tmdb.org/t/p/original/${movieobj.poster_path}`}
+                      />
+                      <div className="mx-6">{movieobj.original_title} </div>
+                    </td>
+                    <td>{movieobj.vote_average}</td>
+                    <td>{movieobj.popularity}</td>
+                    <td>action</td>
+                    <td className="text-red-500">Delete</td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>
