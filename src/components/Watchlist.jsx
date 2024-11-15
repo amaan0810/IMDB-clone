@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 
-export const Watchlist = ({ watchlist }) => {
+export const Watchlist = ({ watchlist, setWatchlist }) => {
   const [search, setSearch] = useState("");
 
   const handelSearch = (e) => {
     setSearch(e.target.value);
+  };
+
+  const sortInc = () => {
+    let sorti = watchlist.sort((movieA, movieB) => {
+      return movieA.vote_average - movieB.vote_average;
+    });
+    setWatchlist([...sorti]);
+  };
+
+  const sortDec = () => {
+    const sortd = watchlist.sort((movieA, movieB) => {
+      return movieB.vote_average - movieA.vote_average;
+    });
+    setWatchlist([...sortd]);
   };
 
   return (
@@ -32,7 +46,17 @@ export const Watchlist = ({ watchlist }) => {
           <thead className="border-b-2">
             <tr>
               <th>Name</th>
-              <th>Ratings</th>
+              <th>
+                <div className="flex justify-center ">
+                  <div className="p-2" onClick={sortDec}>
+                    <i class="fa-solid fa-arrow-up"></i>
+                  </div>
+                  <div className="p-2">Ratings</div>
+                  <div className="p-2" onClick={sortInc}>
+                    <i class="fa-solid fa-arrow-down"></i>
+                  </div>
+                </div>
+              </th>
               <th>Popularity</th>
               <th>Genre</th>
             </tr>
